@@ -1,0 +1,13 @@
+.worktrees/
+apps/api/.venv
+apps/web/node_modules/
+apps/web/.next/
+__pycache__/
+.pytest_cache/
+.DS_Store
+apps/web/tsconfig.tsbuildinfo
+.run-logs/
+.wip-backup/
+ops/cloud/data/
+ops/cloud/secrets.env
+apps/api/.coverage

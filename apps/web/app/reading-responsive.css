@@ -1,0 +1,130 @@
+/* Safe-area insets also apply when the window changes orientation. */
+body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.chapter-sidebar, .source-reader-panel {
+  height: 100dvh;
+}
+
+.book-edition-item {
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.source-reader-panel-content {
+  container: source-reader / inline-size;
+}
+
+@container source-reader (max-width: 580px) {
+  .epub-reader-toolbar, .source-reader-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .epub-reader-toolbar__location {
+    order: 1;
+    flex: 1 0 100%;
+  }
+
+  .epub-reader-settings {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .epub-reader-settings__item + .epub-reader-settings__item {
+    border-left: 0;
+  }
+
+  .source-reader-pdf-canvas {
+    padding: 12px;
+  }
+}
+
+@media (min-width: 1180px) {
+  .sidebar-backdrop {
+    display: none;
+  }
+}
+
+@media (width < 1180px) {
+  .chapter-workspace,
+  .chapter-workspace.is-source-open {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chapter-sidebar,
+  .chapter-sidebar.is-collapsed {
+    visibility: hidden;
+    padding-block-start: calc(76px + env(safe-area-inset-top));
+    padding-block-end: calc(50px + env(safe-area-inset-bottom));
+    padding-inline-start: calc(22px + env(safe-area-inset-left));
+    overscroll-behavior: contain;
+  }
+
+  .chapter-sidebar.is-open {
+    visibility: visible;
+  }
+
+  .chapter-sidebar-directory-toggle,
+  .sidebar-resizer,
+  .source-reader-resizer {
+    display: none;
+  }
+
+  .sidebar-toggle {
+    top: calc(18px + env(safe-area-inset-top));
+    left: calc(18px + env(safe-area-inset-left));
+  }
+
+  .chapter-sidebar .tree-link,
+  .chapter-sidebar .branch-toggle,
+  .chapter-main .top-nav-source-reader {
+    min-height: 44px;
+  }
+
+  .source-reader-panel {
+    position: fixed;
+    z-index: 40;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+    border-left: 0;
+    overscroll-behavior: contain;
+  }
+
+  html:has(.chapter-workspace.is-source-open, .chapter-workspace .sidebar-backdrop) {
+    overflow: hidden;
+  }
+
+  .chapter-workspace.is-source-open > :is(.chapter-main, .chapter-sidebar, .sidebar-toggle) {
+    visibility: hidden;
+  }
+}
+
+@media (pointer: coarse) {
+  .source-reader-panel :is(.epub-reader-toolbar, .source-reader-toolbar) button {
+    min-block-size: 44px;
+  }
+}
+
+@media (max-width: 760px) {
+  .book-overview-shell .top-nav,
+  .chapter-pagination {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .book-overview-shell .chapter-card-link {
+    align-items: flex-start;
+  }
+
+  .book-overview-shell .chapter-card-link h3,
+  .book-overview-shell .idea-preview a {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
