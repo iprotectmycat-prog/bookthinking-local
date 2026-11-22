@@ -151,6 +151,16 @@ class ChapterTeaching(BaseModel):
     open_question: OpenQuestion | None = None
     coverage: list[TopicCoverage]
 
+    @field_validator("coverage", mode="before")
+    @classmethod
+    def normalize_coverage(cls, value):
+        if isinstance(value, dict):
+            return [
+                {"source_unit": source_unit, "topic_indices": topic_indices}
+                for source_unit, topic_indices in value.items()
+            ]
+        return value
+
     @field_validator("organizing_logic", "chapter_summary")
     @classmethod
     def strip_required_text(cls, value):

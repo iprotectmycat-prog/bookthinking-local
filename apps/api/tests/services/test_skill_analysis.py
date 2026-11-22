@@ -256,6 +256,17 @@ def test_chapter_route_accepts_a_list_without_repeating_generation():
     assert summary.reading_route == '概念与条件\n机制与结果'
 
 
+def test_chapter_teaching_accepts_coverage_keyed_by_source_unit():
+    from app.services.skill_analysis import ChapterTeaching
+
+    expected = ChapterTeaching.model_validate(teaching_payload())
+    actual = ChapterTeaching.model_validate({
+        **teaching_payload(),
+        "coverage": {"1": [1]},
+    })
+    assert actual == expected
+
+
 def test_book_rejects_obsolete_rules_before_any_model_request():
     requests = []
     provider = provider_for([], requests)
